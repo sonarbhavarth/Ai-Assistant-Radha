@@ -2,10 +2,7 @@
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system/legacy';
 import { Platform } from 'react-native';
-
-// Use localhost for iOS Simulator, 10.0.2.2 for Android Emulator
-// For physical device, use your machine's LAN IP
-const WS_URL = 'ws://localhost:8000/ws';
+import { WS_URL } from './config';
 
 export class VoiceClient {
     private socket: WebSocket | null = null;

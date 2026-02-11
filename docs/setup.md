@@ -65,15 +65,39 @@ npx expo run:android
 ## 3. Configuration
 
 ### WebSocket URL
-In `radha/src/VoiceClient.ts`, update the `WS_URL`:
-- **Simulator**: `ws://localhost:8000/ws`
-- **Real Device**: `ws://<YOUR_COMPUTER_IP>:8000/ws`
+Instead of a hardcoded string, Radha uses a configuration file to switch between local and remote backends.
+
+Edit [radha/src/config.ts](file:///Volumes/ssd/radha/radha/src/config.ts):
+- **Local Dev**: Set `IS_REMOTE = false` (Uses `localhost`).
+- **AWS Dev**: Set `IS_REMOTE = true` and provide your `AWS_IP`.
 
 ### Large Models
 The project requires several ONNX models. These should be downloaded and placed correctly:
 - **STT**: `faster-whisper` downloads automatically on first run.
 - **TTS**: Place `en_GB-southern_english_female-low.onnx` in `backend/models/`.
 - **Wake Word**: Place the Vosk model in `radha/assets/model-en/`.
+
+---
+
+## 4. AWS Remote Hosting
+
+To host the backend on AWS while keeping the frontend local:
+
+1. **Deploy Backend**: 
+   - SSH into your EC2 instance.
+   - Clone the repository.
+   - Run the automated setup script:
+     ```bash
+     cd backend
+     chmod +x setup_aws.sh
+     ./setup_aws.sh
+     ```
+2. **Security Groups**: 
+   - In the AWS Console, edit your Security Group.
+   - Add an **Inbound Rule** for **Custom TCP**, Port **8000**, from **Anywhere (0.0.0.0/0)**.
+3. **Connect Mobile**: 
+   - Update `AWS_IP` in `radha/src/config.ts` with your EC2 Public IP.
+   - Set `IS_REMOTE = true`.
 
 ---
 
