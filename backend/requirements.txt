@@ -1,0 +1,10 @@
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+websockets>=11.0
+numpy>=1.24.0
+onnxruntime>=1.15.0
+soundfile>=0.12.1
+# Optional: for VAD if we use the torch hub method, but we will try to use onnx for VAD too if possible,
+# or just keep it simple. For now, let's include 'requests' for downloading models if needed in python
+requests
+faster-whisper
